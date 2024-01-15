@@ -15,6 +15,9 @@
 MIDIWave is an Open-source MIDI Controller made by a nerd for nerd musicians providing all the necessary features for music production with expandable hardware.
 The goal of this project is to make a fully scalable, low-cost MIDI controller with various features as well as learning and going deeper into the MIDI protocol, Arduino, Programming, 3D modeling/printing, designing, engineering ...
 
+## Resources
+- [MIDI](https://en.wikipedia.org/wiki/MIDI)
+- [Arduino](https://arduino.cc)
 
 [contributors-shield]: https://img.shields.io/github/contributors/azizbecha/MIDIWave.svg?style=for-the-badge
 [contributors-url]: https://github.com/azizbecha/MIDIWave/graphs/contributors
