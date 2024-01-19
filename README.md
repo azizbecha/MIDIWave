@@ -19,6 +19,16 @@ The goal of this project is to make a fully scalable, low-cost MIDI controller w
 - [MIDI](https://en.wikipedia.org/wiki/MIDI)
 - [Arduino](https://arduino.cc)
 
+## Components
+- 1 x Arduino Pro Micro
+- 8 x 24mm Arcade Button
+- 4 x 10K Potentiometer
+- 1 x CD4051 Multiplexer
+- 8 Leds Adressable LED Strip (WS2812B)
+- 2 x 6.35mm Jack Input (Mono)
+- 4 x Push Button
+- 1 x Blue LED
+
 [contributors-shield]: https://img.shields.io/github/contributors/azizbecha/MIDIWave.svg?style=for-the-badge
 [contributors-url]: https://github.com/azizbecha/MIDIWave/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/azizbecha/MIDIWave.svg?style=for-the-badge
