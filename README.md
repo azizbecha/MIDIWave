@@ -29,6 +29,15 @@ The goal of this project is to make a fully scalable, low-cost MIDI controller w
 - 4 x Push Button
 - 1 x Blue LED
 
+## Features
+- 8 pads to send custom notes.
+- 4 assignable knobs to send CC.
+- 3 assignable buttons to send CC.
+- 1 shift button to expand the number of functions of the device.
+- Multiple banks.
+- Expandable hardware: 2 x 6.35mm jack inputs for adding a sustain pedal and/or other custom device (future plans).
+- Software to customize notes, banks and other functionalities.
+
 [contributors-shield]: https://img.shields.io/github/contributors/azizbecha/MIDIWave.svg?style=for-the-badge
 [contributors-url]: https://github.com/azizbecha/MIDIWave/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/azizbecha/MIDIWave.svg?style=for-the-badge
