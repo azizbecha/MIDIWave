@@ -18,7 +18,7 @@ The goal of this project is to make a fully scalable, low-cost MIDI controller w
 ## Resources & Libraries
 - [MIDI](https://en.wikipedia.org/wiki/MIDI)
 - [Arduino](https://arduino.cc)
-- [MagicPot](https://github.com/francobasaglia/MagicPot) library by @francobasaglia.
+- [MagicPot](https://github.com/francobasaglia/MagicPot) library by [@francobasaglia](https://github.com/francobasaglia).
 
 ## Components
 - 1 x Arduino Pro Micro
