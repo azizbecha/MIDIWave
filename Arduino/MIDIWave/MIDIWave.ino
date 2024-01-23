@@ -10,6 +10,10 @@
 #include <MIDIUSB.h>
 #include <MagicPot.h>
 
+#include <StaticThreadController.h>
+#include <Thread.h>
+#include <ThreadController.h>
+
 // Potentiometers properties
 #define NUM_POTS 4
 #define POTENTIOMETER_PINS {A0, A1, A2, A3}
@@ -33,6 +37,9 @@ int channel = 1;
 int note = 36;
 int CC = 1;
 
+Thread potsThread = Thread();
+//potsThread.enabled = true;
+
 void setup() {
   Serial.begin(115200);
 
@@ -40,9 +47,14 @@ void setup() {
     potentiometers[i].begin();
     potentiometers[i].onChange(onPotentiometerChange);
   }
+  potsThread.onRun(potentiometersJob);
 }
 
 void loop() {
+  potsThread.run();
+}
+
+void potentiometersJob(){
   static unsigned long lastUpdateTime = 0; // Time of the last update
   unsigned long currentTime = millis();
 
