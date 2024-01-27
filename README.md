@@ -16,9 +16,14 @@ MIDIWave is an Open-source MIDI Controller made by a nerd for nerd musicians pro
 The goal of this project is to make a fully scalable, low-cost MIDI controller with various features as well as learning and going deeper into the MIDI protocol, Arduino, Programming, 3D modeling/printing, designing, engineering ...
 
 ## Resources & Libraries
-- [MIDI](https://en.wikipedia.org/wiki/MIDI)
-- [Arduino](https://arduino.cc)
+- [MIDI](https://en.wikipedia.org/wiki/MIDI) protocol
+- [Arduino](https://arduino.cc) framework
+- [MidiUSB](https://github.com/arduino-libraries/MIDIUSB) library
+- [ArduinoThread](https://github.com/ivanseidel/ArduinoThread) library
 - [MagicPot](https://github.com/francobasaglia/MagicPot) library by [@francobasaglia](https://github.com/francobasaglia).
+- [Next.js](https://nextjs.org) framework by [Vercel](https://vercel.com)
+- [WebMidi](https://webmidijs.org) library.
+- [Serialport](https://serialport.io/) library.
 
 ## Components
 - 1 x Arduino Pro Micro
