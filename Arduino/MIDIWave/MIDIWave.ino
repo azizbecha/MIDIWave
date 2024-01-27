@@ -33,12 +33,17 @@ MagicPot potentiometers[NUM_POTS] = {
 };
 
 // Buttons properties
-const int buttonPins[] = {2, 3, 4};
-const int numButtons = sizeof(buttonPins) / sizeof(buttonPins[0]);
+const int numButtons = 8;
 
 // Variables to track button states
 int buttonStates[numButtons] = {0};
-int previousButtonStates[numButtons] = {0};
+int previousButtonValues[numButtons] = {0};
+
+// Multiplexer Pinout
+#define CHAN 10
+#define pinS0 15
+#define pinS1 14
+#define pinS2 16
 
 // MIDI note and velocity values
 const int notes[] = {60, 61, 62};       // MIDI note numbers (C4, C#4)
@@ -55,6 +60,7 @@ Thread buttonsThread = Thread();
 void setup() {
   Serial.begin(115200);
 
+  // Initialize the potentiometers
   for (int i = 0; i < NUM_POTS; i++) {
     potentiometers[i].begin();
     potentiometers[i].onChange(onPotentiometerChange);
@@ -62,9 +68,16 @@ void setup() {
 
   // Initialize the button pins as inputs with pull-up resistors
   for (int i = 0; i < numButtons; i++) {
-    pinMode(buttonPins[i], INPUT_PULLUP);
+    // pinMode(buttonPins[i], INPUT_PULLUP);
+    previousButtonValues[i] = HIGH;
   }
 
+  // Set Multiplexer pins A, B and C as digital outs
+  pinMode(pinS0, OUTPUT);
+  pinMode(pinS1, OUTPUT);
+  pinMode(pinS2, OUTPUT);
+
+  // Initialize Threads
   potsThread.onRun(potentiometersJob);
   buttonsThread.onRun(buttonsJob);
 }
@@ -98,26 +111,37 @@ void potentiometersJob(){
 
 void buttonsJob() {
   // Read the button states
-  for (int i = 0; i < numButtons; i++) {
-    buttonStates[i] = digitalRead(buttonPins[i]);
+  for (int i = 0; i < numButtons; i++)
+  {
+    readChannel(i);
 
     // Check if the button state has changed
-    if (buttonStates[i] != previousButtonStates[i]) {
+    if (buttonStates[i] != previousButtonValues[i]) {
       if (buttonStates[i] == LOW) {
         // Button pressed, send MIDI Note On
-        noteOn(1, notes[i], velocity);
+        noteOn(1, note+i, velocity);
       } else {
         // Button released, send MIDI Note Off
-        noteOff(1, notes[i], 0);
+        noteOff(1, note+i, 0);
       }
-      
-      // Update previousButtonStates
-      previousButtonStates[i] = buttonStates[i];
-      MidiUSB.flush();
 
-      delay(1);  // Add a small delay for button debouncing
+      // Update previousButtonValues
+      previousButtonValues[i] = buttonStates[i];
+
+      // Add a small delay for button debouncing
+      delay(1);
     }
   }
+}
+
+void readChannel(int channel) {
+  // Set the multiplexer to the specified channel
+  digitalWrite(pinS2, (channel & 0x04) ? HIGH : LOW);
+  digitalWrite(pinS1, (channel & 0x02) ? HIGH : LOW);
+  digitalWrite(pinS0, (channel & 0x01) ? HIGH : LOW);
+
+  // Return the value from the selected channel
+  buttonStates[channel] = analogRead(CHAN) == 255;
 }
 
 void onPotentiometerChange() {
@@ -127,11 +151,13 @@ void onPotentiometerChange() {
 void noteOn(byte channel, byte pitch, byte velocity) {
   midiEventPacket_t noteOn = {0x09, 0x90 | channel, pitch, velocity};
   MidiUSB.sendMIDI(noteOn);
+  MidiUSB.flush();
 }
 
 void noteOff(byte channel, byte pitch, byte velocity) {
   midiEventPacket_t noteOff = {0x08, 0x80 | channel, pitch, velocity};
   MidiUSB.sendMIDI(noteOff);
+  MidiUSB.flush();
 }
 
 void controlChange(byte channel, byte control, byte value) {
